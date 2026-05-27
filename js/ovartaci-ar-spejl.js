@@ -59,3 +59,38 @@ const identiteter = [
     },
   ];
 
+//Det er her alle identitets-kanpperne skal indsættes
+//Her finder vi HTML-elementet med id="grid"
+const grid = document.querySelector("#grid");
+
+//Vi gennemgår arrayet "identiter" én identitet ad gangen
+identiteter.forEach((identitet) => {
+  
+  //Opretter et nye <a>-element
+  //<a> bruges fordi hele kortet skal fungere som et klikbart link
+  const card = document.createElement("a");
+
+  //Tilføjer CSS-klassen "identitet-card"
+  //Klassen bruges til styling i CSS
+  card.classList.add("identitet-card");
+
+  //Gør kortet klikbart og sender brugeren videre til næste side, som er angivet i objektets "Link"
+  card.href = identitet.Link;
+
+  //Her indsætter vi HTML-indholdet inde i kortet
+  //${} bruges til at hente data fra objektet
+  card.innerHTML = `
+  
+    <div class="identitet-cirkel">
+
+      <!-- Viser identitetens billede -->
+      <img src="${identitet.Billede}" alt="${identitet.Navn}">
+    </div>
+
+    <!-- Viser identitetens navn -->
+    <h2>${identitet.Navn}</h2>
+  `;
+
+  //Tilføjer det færdige kort til grid-containeren i HTML
+  grid.appendChild(card);
+});

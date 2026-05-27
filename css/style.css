@@ -110,3 +110,61 @@ body{
   width: 100%;
   margin-top: 30px;
 }
+
+/*Styling af identitetet knapper*/
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px 25px;
+  justify-items: center;
+  margin-top: 25px;
+}
+
+.identitet-card {
+  text-decoration: none;
+  color:black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+.identitet-card:hover {
+  transform: scale(1.05);
+}
+
+.identitet-cirkel {
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.identitet-card img {
+  width: 80%;
+  height: auto;
+}
+
+.identitet-card h2 {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.valg-identitet h1 {
+  font-size: 38px;
+  color: #6e7458;
+  margin-bottom: 10px;
+}
+
+.underoverskrift {
+  font-size: 14px;
+  line-height: 1.3;
+}
