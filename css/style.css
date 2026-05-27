@@ -115,9 +115,9 @@ body{
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px 40px;
+  gap: 35px 25px;
   justify-items: center;
-  margin-top: 60px;
+  margin-top: 25px;
 }
 
 .identitet-card {
@@ -135,8 +135,8 @@ body{
 }
 
 .identitet-cirkel {
-  width: 170px;
-  height: 170px;
+  width: 120px;
+  height: 120px;
   background: white;
   border-radius: 50%;
   overflow: hidden;
@@ -147,24 +147,24 @@ body{
 }
 
 .identitet-card img {
-  width: 85%;
+  width: 80%;
   height: auto;
 }
 
 .identitet-card h2 {
-  margin-top: 15px;
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 12px;
   font-weight: bold;
   text-align: center;
 }
 
 .valg-identitet h1 {
-  font-size: 55px;
+  font-size: 38px;
   color: #6e7458;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .underoverskrift {
-  font-size: 18px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.3;
 }
