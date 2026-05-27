@@ -39,6 +39,30 @@ body{
     box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
 }
 
+.ja-btn{
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.nej-btn{
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.yes-btn{
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
+.no-btn{
+    padding: 10px 20px;
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+
 /* Glow animation */
 @keyframes glowMove {
     0% { background-position: 0% 50%; }
