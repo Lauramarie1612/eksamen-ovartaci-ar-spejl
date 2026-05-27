@@ -52,3 +52,5 @@ const identiteter = [
       Beskrivelse: "Ovartaci blev født som Louis Marcussen og voksede op i en fattig familie i Jylland. Som ung mand arbejdede han blandt andet som malersvend og rejste også i en periode til Argentina, hvor han arbejdede under hårde forhold. Rejserne og oplevelserne gjorde stort indtryk på ham og blev senere en del af hans fantasiverden i kunsten. I sine yngre år levede han udadtil som mand og blev beskrevet som intelligent, kreativ og meget fantasifuld. Senere i livet ændrede hans forhold til køn og identitet sig markant. Han ønskede i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten.",
     },
   ];
+
+  
