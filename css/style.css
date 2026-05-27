@@ -44,8 +44,6 @@ body{
   height: 100%;
   border-radius: 30px;
 
-
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,18 +75,6 @@ body{
   margin-bottom: 20px;
 }
 
-/* Glow animation */
-@keyframes glowMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 /* container inde i spejlet - centrerer indhold vandret og lodret */
 .container {
