@@ -27,10 +27,10 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             z-index: 2;
-            mix-blend-mode: screen;
-            opacity: 0.65;
+            mix-blend-mode: multiply;
+            opacity: 0.9;
             pointer-events: none;
         }
 
@@ -119,12 +119,12 @@
 
     <script>
         const identiteter = [
-            { id: 1, Navn: "Louisa Pupparpasta", Billede: "../images/louisa.png",  videoFilter: "hue-rotate(300deg) saturate(1.6) brightness(1.1)" },
-            { id: 2, Navn: "Buddhisten",         Billede: "../images/buddha.png",  videoFilter: "hue-rotate(30deg) saturate(1.8) brightness(1.1)" },
-            { id: 3, Navn: "Fuglen i paradis",   Billede: "../images/fuglen.png",  videoFilter: "hue-rotate(195deg) saturate(1.6)" },
-            { id: 4, Navn: "Dragen",             Billede: "../images/dragen.png",  videoFilter: "hue-rotate(110deg) saturate(1.7)" },
-            { id: 5, Navn: "Tigeren",            Billede: "../images/tigeren.png", videoFilter: "hue-rotate(10deg) saturate(2) brightness(1.1)" },
-            { id: 6, Navn: "Ovartaci",           Billede: "../images/ovartaci.png",videoFilter: "sepia(0.4) contrast(1.2)" },
+            { id: 1, Navn: "Louisa Pupparpasta", Billede: "../images/louisa.png"   },
+            { id: 2, Navn: "Buddhisten",         Billede: "../images/buddha.png"   },
+            { id: 3, Navn: "Fuglen i paradis",   Billede: "../images/fuglen.png"   },
+            { id: 4, Navn: "Dragen",             Billede: "../images/dragen.png"   },
+            { id: 5, Navn: "Tigeren",            Billede: "../images/tigeren.png"  },
+            { id: 6, Navn: "Ovartaci",           Billede: "../images/ovartaci.png" },
         ];
 
         const params = new URLSearchParams(window.location.search);
@@ -136,9 +136,8 @@
         const label    = document.getElementById("identity-label");
         const errorDiv = document.getElementById("camera-error");
 
-        overlay.src          = identitet.Billede;
-        label.textContent    = identitet.Navn;
-        video.style.filter   = identitet.videoFilter;
+        overlay.src       = identitet.Billede;
+        label.textContent = identitet.Navn;
 
         navigator.mediaDevices
             .getUserMedia({ video: { facingMode: "user" }, audio: false })
