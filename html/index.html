@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ovartaci AR spejl</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
   <div class="mirror-frame">
-    <div class="mirror-led">
-   
-    <main class="container">
-        <h1>Velkommen ind i<br> Overtacis identiter</h1>
+    <video class="bg-video" autoplay muted loop playsinline controls>
+      <source src="../images/video.mp4" type="video/mp4">
+    </video>
 
-      <button class="start-btn" onclick="window.location.href='kamera.html';">
-        START
+    <div class="mirror-led">
+      <main class="container">
+        <h1>Velkommen ind i<br> Overtacis identiteter</h1>
+
+        <button class="start-btn" onclick="window.location.href='kamera.html';">
+          START
         </button>
 
-   <div class="language-selector">
-        <button onclick="window.location.href='index-eng.html';">
-             🇬🇧 English </button>
-        <button> 🇩🇰 Dansk </button>
+        <div class="language-selector">
+          <button onclick="window.location.href='index-eng.html';">🇬🇧 English</button>
+          <button>🇩🇰 Dansk</button>
+        </div>
+      </main>
     </div>
-    </div>
-</div>
-
-</main>
-    
+  </div>
 
 </body>
 </html>

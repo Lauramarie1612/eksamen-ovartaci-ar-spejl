@@ -1,5 +1,6 @@
 body{
-     background: #e8e8e8;
+     background: transparent;
+     margin: 0;
 }
 /* Ydre LED frame */
 .mirror-frame {
@@ -10,9 +11,13 @@ body{
     padding: 12px;
     border-radius: 40px;
 
-    background: linear-gradient(135deg, #7D8F99, #E6EEF2, #f3f1f3);
+    background: transparent; /* video overtager */
     background-size: 300% 300%;
-    animation: glowMove 6s ease infinite;
+
+    /* Black rounded frame */
+    border: 10px solid #000;
+    box-sizing: border-box;
+    background-clip: padding-box;
 
     box-shadow:
         0 0 25px rgba(198, 193, 218, 0.6),
@@ -22,6 +27,18 @@ body{
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
+}
+
+/* Background video that fills the mirror */
+.bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
 }
 
 .mirror-led {
@@ -37,6 +54,8 @@ body{
     justify-content: center;
 
     box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
+    position: relative;
+    z-index: 1;
 }
 
 .ja-btn{
