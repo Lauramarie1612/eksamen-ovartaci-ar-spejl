@@ -125,8 +125,7 @@
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 10;
-            background: rgba(0,0,0,0.82);
-            backdrop-filter: blur(8px);
+            background: white;
             display: none;
             flex-direction: column;
             overflow: hidden;
@@ -145,19 +144,20 @@
         }
 
         .info-modal-header h2 {
-            color: white;
-            font-size: 17px;
+            color: black;
+            font-size: 20px;
             margin: 0;
             letter-spacing: 0.04em;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
         }
 
         .info-close-btn {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.35);
-            color: white;
-            font-size: 18px;
-            width: 30px;
-            height: 30px;
+            background: #eee;
+            border: 1px solid #ccc;
+            color: black;
+            font-size: 30px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -167,7 +167,7 @@
         }
 
         .info-close-btn:hover {
-            background: rgba(255,255,255,0.3);
+            background: #ddd;
         }
 
         .info-list {
@@ -180,22 +180,24 @@
         }
 
         .info-item {
-            border-top: 1px solid rgba(255,255,255,0.15);
+            border-top: 1px solid #ddd;
             padding-top: 14px;
         }
 
         .info-item h3 {
-            color: #e8e0c8;
-            font-size: 14px;
+            color: black;
+            font-size: 17px;
             margin: 0 0 6px;
             letter-spacing: 0.05em;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
         }
 
         .info-item p {
-            color: rgba(255,255,255,0.75);
-            font-size: 12px;
-            line-height: 1.55;
+            color: #222;
+            font-size: 18px;
+            line-height: 1.6;
             margin: 0;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
         }
     </style>
 </head>
