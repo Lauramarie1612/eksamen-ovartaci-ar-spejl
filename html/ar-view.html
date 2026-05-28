@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Spejl</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .camera-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        #camera-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+            z-index: 1;
+        }
+
+        #filter-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            z-index: 2;
+            mix-blend-mode: multiply;
+            opacity: 0.9;
+            pointer-events: none;
+        }
+
+        .ar-ui {
+            position: absolute;
+            bottom: 24px;
+            left: 0; right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        #identity-label {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+            margin: 0;
+        }
+
+        .back-btn {
+            padding: 8px 22px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.35);
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(6px);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,0,0,0.55);
+        }
+
+        #camera-error {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 4;
+            padding: 30px;
+        }
+
+        #camera-error p {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.5;
+            text-align: center;
+            margin: 0;
+        }
+
+        #camera-error .back-btn {
+            color: #333;
+            border-color: #aaa;
+            background: rgba(255,255,255,0.6);
+        }
+
+        .info-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 5;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.35);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .info-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
+        #info-modal {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
+            background: rgba(0,0,0,0.82);
+            backdrop-filter: blur(8px);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #info-modal.open {
+            display: flex;
+        }
+
+        .info-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px 10px;
+            flex-shrink: 0;
+        }
+
+        .info-modal-header h2 {
+            color: white;
+            font-size: 17px;
+            margin: 0;
+            letter-spacing: 0.04em;
+        }
+
+        .info-close-btn {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .info-close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .info-list {
+            overflow-y: auto;
+            padding: 0 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-item {
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 14px;
+        }
+
+        .info-item h3 {
+            color: #e8e0c8;
+            font-size: 14px;
+            margin: 0 0 6px;
+            letter-spacing: 0.05em;
+        }
+
+        .info-item p {
+            color: rgba(255,255,255,0.75);
+            font-size: 12px;
+            line-height: 1.55;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="mirror-frame">
+        <div class="mirror-led">
+            <div class="camera-wrapper">
+                <video id="camera-video" autoplay playsinline muted></video>
+                <img id="filter-overlay" src="" alt="">
+
+                <button class="info-btn" id="info-btn" aria-label="Om identiteterne">i</button>
+
+                <div id="info-modal">
+                    <div class="info-modal-header">
+                        <h2>Ovartacis identiteter</h2>
+                        <button class="info-close-btn" id="info-close-btn" aria-label="Luk">✕</button>
+                    </div>
+                    <div class="info-list" id="info-list"></div>
+                </div>
+
+                <div class="ar-ui">
+                    <p id="identity-label"></p>
+                    <a href="identiteter.html" class="back-btn">← Vælg anden identitet</a>
+                </div>
+
+                <div id="camera-error">
+                    <p>Kameraet kunne ikke startes.<br>Kontrollér at du har givet tilladelse.</p>
+                    <a href="identiteter.html" class="back-btn">← Tilbage</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const identiteter = [
+            { id: 1, Navn: "Louisa Pupparpasta", Billede: "../images/louisa.png",   Beskrivelse: "I midten af 1950'erne skriver og sender Ovartaci et brev til Kirkeministeriet og Justitsministeriet, hvor han hævder, at hans fødenavn er Louisa Pupparpasta, og at han fremover ønsker at blive tiltalt som 'Frøken' og bruge det opfundne navn Ovartaci Pupparpasta. Han ønsker også tilladelse til at gå i kvindetøj. Retslægerådet argumenterer for, at Marcussen lider af skizofreni, og at det er en del af hans sygdom, at han forestiller sig selv som en kvinde." },
+            { id: 2, Navn: "Buddhisten",         Billede: "../images/buddha.png",   Beskrivelse: "Religiøse spørgsmål optager Ovartaci, og selvom der synes at være en ret stabil kerne i hans religiøse verdenssyn, er der også nogle mærkelige afvigelser. Ovartaci hælder mod buddhismen ('Jeg er buddhist og tilhænger af den buddhistiske lære'), og han går rundt med en lille Buddhafigur i lommen." },
+            { id: 3, Navn: "Fuglen i paradis",   Billede: "../images/fuglen.png",   Beskrivelse: "\"Jeg begyndte som en paradisfugl, og under min flugt blev jeg til sidst forvandlet til en måge og ankom til Grønland, men det er mange år siden.\"" },
+            { id: 4, Navn: "Dragen",             Billede: "../images/dragen.png",   Beskrivelse: "Drager i Ovartacis kosmologi fungerede ikke som monstre, men som spirituelle symboler på lykke, værdighed, transformation og personlig frihed – en flugtvej og et sindbillede på at kunne bryde ud af psykiatriens fysiske og mentale rammer." },
+            { id: 5, Navn: "Tigeren",            Billede: "../images/tigeren.png",  Beskrivelse: "\"Det er et menneske i tigerskikkelse eller en tiger, der rejser sig på bagbenene, men se, den har jo tæer som mennesket og ikke som en tiger. Jeg var selv tiger og blev forvandlet til menneske.\" – Ovartaci. Denne flydende tilstand mellem dyr og menneske er kendetegnende for Ovartaci." },
+            { id: 6, Navn: "Ovartaci",           Billede: "../images/ovartaci.png", Beskrivelse: "Ovartaci blev født som Louis Marcussen i en fattig familie i Jylland. Han arbejdede som malersvend og rejste til Argentina. Senere i livet ønskede han i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten." },
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get("id"));
+        const identitet = identiteter.find(i => i.id === id) || identiteter[0];
+
+        const video    = document.getElementById("camera-video");
+        const overlay  = document.getElementById("filter-overlay");
+        const label    = document.getElementById("identity-label");
+        const errorDiv = document.getElementById("camera-error");
+
+        overlay.src       = identitet.Billede;
+        label.textContent = identitet.Navn;
+
+        const infoBtn   = document.getElementById("info-btn");
+        const infoModal = document.getElementById("info-modal");
+        const infoClose = document.getElementById("info-close-btn");
+        const infoList  = document.getElementById("info-list");
+
+        const item = document.createElement("div");
+        item.className = "info-item";
+        item.innerHTML = `<h3>${identitet.Navn}</h3><p>${identitet.Beskrivelse}</p>`;
+        infoList.appendChild(item);
+
+        infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
+        infoClose.addEventListener("click", () => infoModal.classList.remove("open"));
+
+        navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: "user" }, audio: false })
+            .then(stream => {
+                video.srcObject = stream;
+            })
+            .catch(() => {
+                video.style.display   = "none";
+                overlay.style.display = "none";
+                document.querySelector(".ar-ui").style.display = "none";
+                errorDiv.style.display = "flex";
+            });
+    </script>
+</body>
+</html>
