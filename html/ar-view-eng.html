@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Mirror</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
+    <style>
+        .camera-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        #camera-video {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+            z-index: 1;
+        }
+
+        #filter-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: block;
+            z-index: 2;
+            opacity: 1;
+            pointer-events: none;
+        }
+
+        .ar-ui {
+            position: absolute;
+            bottom: 24px;
+            left: 0; right: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            z-index: 3;
+        }
+
+        #identity-label {
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.9);
+            margin: 0;
+        }
+
+        .back-btn {
+            padding: 8px 22px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.35);
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(6px);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(0,0,0,0.55);
+        }
+
+        #camera-error {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            z-index: 4;
+            padding: 30px;
+        }
+
+        #camera-error p {
+            color: #444;
+            font-size: 15px;
+            line-height: 1.5;
+            text-align: center;
+            margin: 0;
+        }
+
+        #camera-error .back-btn {
+            color: #333;
+            border-color: #aaa;
+            background: rgba(255,255,255,0.6);
+        }
+
+        .info-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 5;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.35);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            border: 1px solid rgba(255,255,255,0.4);
+            backdrop-filter: blur(6px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .info-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
+        #info-modal {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
+            background: white;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #info-modal.open {
+            display: flex;
+        }
+
+        .info-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px 10px;
+            flex-shrink: 0;
+        }
+
+        .info-modal-header h2 {
+            color: black;
+            font-size: 20px;
+            margin: 0;
+            letter-spacing: 0.04em;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
+        }
+
+        .info-close-btn {
+            background: #eee;
+            border: 1px solid #ccc;
+            color: black;
+            font-size: 30px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .info-close-btn:hover {
+            background: #ddd;
+        }
+
+        .info-list {
+            overflow-y: auto;
+            padding: 0 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .info-item {
+            border-top: 1px solid #ddd;
+            padding-top: 14px;
+        }
+
+        .info-item h3 {
+            color: black;
+            font-size: 17px;
+            margin: 0 0 6px;
+            letter-spacing: 0.05em;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
+        }
+
+        .info-item p {
+            color: #222;
+            font-size: 18px;
+            line-height: 1.6;
+            margin: 0;
+            font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="mirror-frame">
+        <div class="mirror-led">
+            <div class="camera-wrapper">
+                <video id="camera-video" autoplay playsinline muted></video>
+                <canvas id="filter-overlay"></canvas>
+
+                <button class="info-btn" id="info-btn" aria-label="About the identities">i</button>
+
+                <div id="info-modal">
+                    <div class="info-modal-header">
+                        <h2>Ovartaci's Identities</h2>
+                        <button class="info-close-btn" id="info-close-btn" aria-label="Close">✕</button>
+                    </div>
+                    <div class="info-list" id="info-list"></div>
+                </div>
+
+                <div class="ar-ui">
+                    <p id="identity-label"></p>
+                    <a href="identiteter-eng.html" class="back-btn">← Choose another identity</a>
+                </div>
+
+                <div id="camera-error">
+                    <p>The camera could not be started.<br>Please make sure permission has been granted.</p>
+                    <a href="identiteter-eng.html" class="back-btn">← Back</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // yOffset: forskydning lodret i forhold til filterhøjden (0 = centreret, -0.2 = 20% op, 0.2 = 20% ned)
+        // scale: overskriver global SCALE for denne identitet (højere tal = større filter)
+        const identities = [
+            { id: 1, Name: "Louisa Pupparpasta", Image: "../images/louisa.png",   yOffset: 0,    scale: null, Description: "In the mid-1950s, Ovartaci wrote and sent a letter to the Ministry of Ecclesiastical Affairs and the Ministry of Justice, claiming that his birth name was Louisa Pupparpasta and that he wished to be addressed as “Miss” and use the invented name Ovartaci Pupparpasta from then on. He also requested permission to wear women’s clothing. The Medico-Legal Council argued that Marcussen suffered from schizophrenia, and that imagining himself as a woman was part of his illness.." },
+            { id: 2, Name: "The Buddhist",         Image: "../images/buddha.png",   yOffset: -0.2,    scale: 2.5, Description: "Religious questions fascinated Ovartaci, and although there seems to be a fairly stable core in his religious worldview, there are also some unusual deviations. Ovartaci leaned towards Buddhism (“I am a Buddhist and a follower of Buddhist teachings”), and he carried a small Buddha figure in his pocket." },
+            { id: 3, Name: "Bird of Paradise",   Image: "../images/fuglen.png",   yOffset: 0,    scale: null, Description: "\"I began as a bird of paradise, and during my flight I was eventually transformed into a seagull and arrived in Greenland, but that was many years ago.\"" },
+            { id: 4, Name: "The Dragon",             Image: "../images/dragen.png",   yOffset: 0,    scale: null, Description: "In Ovartaci’s cosmology, dragons did not function as monsters, but as spiritual symbols of happiness, dignity, transformation, and personal freedom — an escape route and a mental image of breaking free from the physical and psychological boundaries of psychiatry." },
+            { id: 5, Name: "The Tiger",            Image: "../images/tigeren.png",  yOffset: 0,    scale: null, Description: "\“It is a human in the shape of a tiger, or a tiger standing on its hind legs, but look, it has toes like a human and not like a tiger. I myself was once a tiger and was transformed into a human.\” — Ovartaci. This fluid state between animal and human is characteristic of Ovartaci." },
+            { id: 6, Name: "Ovartaci",           Image: "../images/ovartaci.png", yOffset: -0.2,    scale: 2.5, Description: "Ovartaci was born as Louis Marcussen into a poor family in Jutland. He worked as a house painter and traveled to Argentina. Later in life, he wished for long periods to live as a woman and created many female figures and self-representations in his art." },
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get("id"));
+        const identitet = identiteter.find(i => i.id === id) || identities[0];
+
+        const video    = document.getElementById("camera-video");
+        const canvas   = document.getElementById("filter-overlay");
+        const ctx      = canvas.getContext("2d");
+        const label    = document.getElementById("identity-label");
+        const errorDiv = document.getElementById("camera-error");
+
+        label.textContent = identity.Name;
+
+        // Forudindlæs filterbillede
+        const filterImg = new Image();
+        filterImg.src = identity.Image;
+
+        // --- Canvas-tegning ---
+        function resizeCanvas() {
+            canvas.width  = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+
+        // Smoothed ansigts-position (normaliserede koordinater 0-1)
+        let tracked = false;
+        let sx = 0.5, sy = 0.45, sw = 0.5;
+        const SMOOTH = 0.2;
+        // Global skalafaktor: hvor mange gange ansigtsbredden filteret fylder
+        const SCALE = 3.2;
+
+        function draw() {
+            if (!canvas.width || !canvas.height || !filterImg.complete || !filterImg.naturalWidth) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const activeScale = identitet.scale ?? SCALE;
+
+            let dx, dy, dw, dh;
+            if (tracked) {
+                dw = sw * canvas.width * activeScale;
+                dh = dw * filterImg.naturalHeight / filterImg.naturalWidth;
+                dx = sx * canvas.width  - dw / 2;
+                dy = sy * canvas.height - dh / 2 + (identitet.yOffset ?? 0) * dh;
+            } else {
+                // Fallback: object-fit contain
+                const imgAspect    = filterImg.naturalWidth / filterImg.naturalHeight;
+                const canvasAspect = canvas.width / canvas.height;
+                if (imgAspect > canvasAspect) {
+                    dw = canvas.width;  dh = canvas.width / imgAspect;
+                } else {
+                    dh = canvas.height; dw = canvas.height * imgAspect;
+                }
+                dx = (canvas.width  - dw) / 2;
+                dy = (canvas.height - dh) / 2;
+            }
+            ctx.drawImage(filterImg, dx, dy, dw, dh);
+        }
+
+        // --- MediaPipe Face Detection ---
+        let detector = null;
+        let busy = false;
+
+        function startDetectionLoop() {
+            function loop() {
+                if (detector && !busy && video.readyState >= 2 && !video.paused) {
+                    busy = true;
+                    detector.send({ image: video }).catch(() => { busy = false; });
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        function initDetector() {
+            try {
+                detector = new FaceDetection({
+                    locateFile: file =>
+                        `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+                });
+                detector.setOptions({ model: "short", minDetectionConfidence: 0.5 });
+                detector.onResults(results => {
+                    busy = false;
+                    if (results.detections?.length > 0) {
+                        const bb = results.detections[0].boundingBox;
+                        // Spejl x-aksen fordi kameraet er spejlvendt
+                        const tx = 1 - bb.xCenter;
+                        const ty = bb.yCenter;
+                        const tw = bb.width;
+                        if (!tracked) {
+                            sx = tx; sy = ty; sw = tw;
+                            tracked = true;
+                        } else {
+                            sx += SMOOTH * (tx - sx);
+                            sy += SMOOTH * (ty - sy);
+                            sw += SMOOTH * (tw - sw);
+                        }
+                    } else {
+                        tracked = false;
+                    }
+                    draw();
+                });
+            } catch (e) {
+                // MediaPipe ikke tilgængeligt – brug fuld-skærm fallback
+                requestAnimationFrame(draw);
+            }
+        }
+
+        // --- Info-modal ---
+        const infoBtn   = document.getElementById("info-btn");
+        const infoModal = document.getElementById("info-modal");
+        const infoClose = document.getElementById("info-close-btn");
+        const infoList  = document.getElementById("info-list");
+
+        const item = document.createElement("div");
+        item.className = "info-item";
+        item.innerHTML = `<h3>${identity.Name}</h3><p>${identity.Description}</p>`;
+        infoList.appendChild(item);
+
+        infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
+        infoClose.addEventListener("click", () => infoModal.classList.remove("open"));
+
+        // --- Kamera ---
+        resizeCanvas();
+        window.addEventListener("resize", () => { resizeCanvas(); draw(); });
+        filterImg.addEventListener("load", draw);
+
+        navigator.mediaDevices
+            .getUserMedia({ video: { facingMode: "user" }, audio: false })
+            .then(stream => {
+                video.srcObject = stream;
+                video.addEventListener("loadeddata", () => {
+                    resizeCanvas();
+                    initDetector();
+                    startDetectionLoop();
+                });
+            })
+            .catch(() => {
+                canvas.style.display = "none";
+                document.querySelector(".ar-ui").style.display = "none";
+                errorDiv.style.display = "flex";
+            });
+    </script>
+</body>
+</html>
