@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Spejl</title>
+    <title>AR Mirror</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
     <style>
@@ -208,24 +208,24 @@
                 <video id="camera-video" autoplay playsinline muted></video>
                 <canvas id="filter-overlay"></canvas>
 
-                <button class="info-btn" id="info-btn" aria-label="Om identiteterne">i</button>
+                <button class="info-btn" id="info-btn" aria-label="About the identities">i</button>
 
                 <div id="info-modal">
                     <div class="info-modal-header">
-                        <h2>Ovartacis identiteter</h2>
-                        <button class="info-close-btn" id="info-close-btn" aria-label="Luk">✕</button>
+                        <h2>Ovartaci's Identities</h2>
+                        <button class="info-close-btn" id="info-close-btn" aria-label="Close">✕</button>
                     </div>
                     <div class="info-list" id="info-list"></div>
                 </div>
 
                 <div class="ar-ui">
                     <p id="identity-label"></p>
-                    <a href="identiteter.html" class="back-btn">← Vælg anden identitet</a>
+                    <a href="identiteter-eng.html" class="back-btn">← Choose another identity</a>
                 </div>
 
                 <div id="camera-error">
-                    <p>Kameraet kunne ikke startes.<br>Kontrollér at du har givet tilladelse.</p>
-                    <a href="identiteter.html" class="back-btn">← Tilbage</a>
+                    <p>The camera could not be started.<br>Please make sure permission has been granted.</p>
+                    <a href="identiteter-eng.html" class="back-btn">← Back</a>
                 </div>
             </div>
         </div>
@@ -234,18 +234,18 @@
     <script>
         // yOffset: forskydning lodret i forhold til filterhøjden (0 = centreret, -0.2 = 20% op, 0.2 = 20% ned)
         // scale: overskriver global SCALE for denne identitet (højere tal = større filter)
-        const identiteter = [
-            { id: 1, Navn: "Louisa Pupparpasta", Billede: "../images/louisa.png",   yOffset: 0,    scale: null, Beskrivelse: "I midten af 1950'erne skriver og sender Ovartaci et brev til Kirkeministeriet og Justitsministeriet, hvor han hævder, at hans fødenavn er Louisa Pupparpasta, og at han fremover ønsker at blive tiltalt som 'Frøken' og bruge det opfundne navn Ovartaci Pupparpasta. Han ønsker også tilladelse til at gå i kvindetøj. Retslægerådet argumenterer for, at Marcussen lider af skizofreni, og at det er en del af hans sygdom, at han forestiller sig selv som en kvinde." },
-            { id: 2, Navn: "Buddhisten",         Billede: "../images/buddha.png",   yOffset: -0.2,    scale: 2.5, Beskrivelse: "Religiøse spørgsmål optager Ovartaci, og selvom der synes at være en ret stabil kerne i hans religiøse verdenssyn, er der også nogle mærkelige afvigelser. Ovartaci hælder mod buddhismen ('Jeg er buddhist og tilhænger af den buddhistiske lære'), og han går rundt med en lille Buddhafigur i lommen." },
-            { id: 3, Navn: "Fuglen i paradis",   Billede: "../images/fuglen.png",   yOffset: 0,    scale: null, Beskrivelse: "\"Jeg begyndte som en paradisfugl, og under min flugt blev jeg til sidst forvandlet til en måge og ankom til Grønland, men det er mange år siden.\"" },
-            { id: 4, Navn: "Dragen",             Billede: "../images/dragen.png",   yOffset: 0,    scale: null, Beskrivelse: "Drager i Ovartacis kosmologi fungerede ikke som monstre, men som spirituelle symboler på lykke, værdighed, transformation og personlig frihed – en flugtvej og et sindbillede på at kunne bryde ud af psykiatriens fysiske og mentale rammer." },
-            { id: 5, Navn: "Tigeren",            Billede: "../images/tigeren.png",  yOffset: 0,    scale: null, Beskrivelse: "\"Det er et menneske i tigerskikkelse eller en tiger, der rejser sig på bagbenene, men se, den har jo tæer som mennesket og ikke som en tiger. Jeg var selv tiger og blev forvandlet til menneske.\" – Ovartaci. Denne flydende tilstand mellem dyr og menneske er kendetegnende for Ovartaci." },
-            { id: 6, Navn: "Ovartaci",           Billede: "../images/ovartaci.png", yOffset: -0.2,    scale: 2.5, Beskrivelse: "Ovartaci blev født som Louis Marcussen i en fattig familie i Jylland. Han arbejdede som malersvend og rejste til Argentina. Senere i livet ønskede han i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten." },
+        const identities = [
+            { id: 1, Name: "Louisa Pupparpasta", Image: "../images/louisa.png",   yOffset: 0,    scale: null, Description: "In the mid-1950s, Ovartaci wrote and sent a letter to the Ministry of Ecclesiastical Affairs and the Ministry of Justice, claiming that his birth name was Louisa Pupparpasta and that he wished to be addressed as “Miss” and use the invented name Ovartaci Pupparpasta from then on. He also requested permission to wear women’s clothing. The Medico-Legal Council argued that Marcussen suffered from schizophrenia, and that imagining himself as a woman was part of his illness.." },
+            { id: 2, Name: "The Buddhist",         Image: "../images/buddha.png",   yOffset: -0.2,    scale: 2.5, Description: "Religious questions fascinated Ovartaci, and although there seems to be a fairly stable core in his religious worldview, there are also some unusual deviations. Ovartaci leaned towards Buddhism (“I am a Buddhist and a follower of Buddhist teachings”), and he carried a small Buddha figure in his pocket." },
+            { id: 3, Name: "Bird of Paradise",   Image: "../images/fuglen.png",   yOffset: 0,    scale: null, Description: "\"I began as a bird of paradise, and during my flight I was eventually transformed into a seagull and arrived in Greenland, but that was many years ago.\"" },
+            { id: 4, Name: "The Dragon",             Image: "../images/dragen.png",   yOffset: 0,    scale: null, Description: "In Ovartaci’s cosmology, dragons did not function as monsters, but as spiritual symbols of happiness, dignity, transformation, and personal freedom — an escape route and a mental image of breaking free from the physical and psychological boundaries of psychiatry." },
+            { id: 5, Name: "The Tiger",            Image: "../images/tigeren.png",  yOffset: 0,    scale: null, Description: "\“It is a human in the shape of a tiger, or a tiger standing on its hind legs, but look, it has toes like a human and not like a tiger. I myself was once a tiger and was transformed into a human.\” — Ovartaci. This fluid state between animal and human is characteristic of Ovartaci." },
+            { id: 6, Name: "Ovartaci",           Image: "../images/ovartaci.png", yOffset: -0.2,    scale: 2.5, Description: "Ovartaci was born as Louis Marcussen into a poor family in Jutland. He worked as a house painter and traveled to Argentina. Later in life, he wished for long periods to live as a woman and created many female figures and self-representations in his art." },
         ];
 
         const params = new URLSearchParams(window.location.search);
         const id = parseInt(params.get("id"));
-        const identitet = identiteter.find(i => i.id === id) || identiteter[0];
+        const identitet = identiteter.find(i => i.id === id) || identities[0];
 
         const video    = document.getElementById("camera-video");
         const canvas   = document.getElementById("filter-overlay");
@@ -253,11 +253,11 @@
         const label    = document.getElementById("identity-label");
         const errorDiv = document.getElementById("camera-error");
 
-        label.textContent = identitet.Navn;
+        label.textContent = identity.Name;
 
         // Forudindlæs filterbillede
         const filterImg = new Image();
-        filterImg.src = identitet.Billede;
+        filterImg.src = identity.Image;
 
         // --- Canvas-tegning ---
         function resizeCanvas() {
@@ -356,7 +356,7 @@
 
         const item = document.createElement("div");
         item.className = "info-item";
-        item.innerHTML = `<h3>${identitet.Navn}</h3><p>${identitet.Beskrivelse}</p>`;
+        item.innerHTML = `<h3>${identity.Name}</h3><p>${identity.Description}</p>`;
         infoList.appendChild(item);
 
         infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
