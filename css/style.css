@@ -97,6 +97,10 @@ body{
   display: flex;
 }
 
+.container h1 {
+  color: #ffffff;
+}
+
 /* Styling af start btn*/
 .start-btn {
   padding: 15px 50px;
@@ -183,7 +187,7 @@ font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, O
 
 .valg-identitet h1 {
   font-size: 38px;
-  color: #6e7458;
+  color: #000000;
   margin-bottom: 10px;
 }
 
