@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR Spejl</title>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
     <style>
         .camera-wrapper {
             position: relative;
@@ -27,7 +28,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            object-fit: contain;
+            display: block;
             z-index: 2;
             mix-blend-mode: multiply;
             opacity: 0.9;
@@ -206,7 +207,7 @@
         <div class="mirror-led">
             <div class="camera-wrapper">
                 <video id="camera-video" autoplay playsinline muted></video>
-                <img id="filter-overlay" src="" alt="">
+                <canvas id="filter-overlay"></canvas>
 
                 <button class="info-btn" id="info-btn" aria-label="Om identiteterne">i</button>
 
@@ -246,13 +247,105 @@
         const identitet = identiteter.find(i => i.id === id) || identiteter[0];
 
         const video    = document.getElementById("camera-video");
-        const overlay  = document.getElementById("filter-overlay");
+        const canvas   = document.getElementById("filter-overlay");
+        const ctx      = canvas.getContext("2d");
         const label    = document.getElementById("identity-label");
         const errorDiv = document.getElementById("camera-error");
 
-        overlay.src       = identitet.Billede;
         label.textContent = identitet.Navn;
 
+        // Forudindlæs filterbillede
+        const filterImg = new Image();
+        filterImg.src = identitet.Billede;
+
+        // --- Canvas-tegning ---
+        function resizeCanvas() {
+            canvas.width  = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+        }
+
+        // Smoothed ansigts-position (normaliserede koordinater 0-1)
+        let tracked = false;
+        let sx = 0.5, sy = 0.45, sw = 0.5;
+        const SMOOTH = 0.2;
+        // Skalafaktor: hvor mange gange ansigtsbredden filteret fylder
+        const SCALE = 3.2;
+
+        function draw() {
+            if (!canvas.width || !canvas.height || !filterImg.complete || !filterImg.naturalWidth) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            let dx, dy, dw, dh;
+            if (tracked) {
+                dw = sw * canvas.width * SCALE;
+                dh = dw * filterImg.naturalHeight / filterImg.naturalWidth;
+                dx = sx * canvas.width  - dw / 2;
+                dy = sy * canvas.height - dh / 2;
+            } else {
+                // Fallback: object-fit contain
+                const imgAspect    = filterImg.naturalWidth / filterImg.naturalHeight;
+                const canvasAspect = canvas.width / canvas.height;
+                if (imgAspect > canvasAspect) {
+                    dw = canvas.width;  dh = canvas.width / imgAspect;
+                } else {
+                    dh = canvas.height; dw = canvas.height * imgAspect;
+                }
+                dx = (canvas.width  - dw) / 2;
+                dy = (canvas.height - dh) / 2;
+            }
+            ctx.drawImage(filterImg, dx, dy, dw, dh);
+        }
+
+        // --- MediaPipe Face Detection ---
+        let detector = null;
+        let busy = false;
+
+        function startDetectionLoop() {
+            function loop() {
+                if (detector && !busy && video.readyState >= 2 && !video.paused) {
+                    busy = true;
+                    detector.send({ image: video }).catch(() => { busy = false; });
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
+
+        function initDetector() {
+            try {
+                detector = new FaceDetection({
+                    locateFile: file =>
+                        `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+                });
+                detector.setOptions({ model: "short", minDetectionConfidence: 0.5 });
+                detector.onResults(results => {
+                    busy = false;
+                    if (results.detections?.length > 0) {
+                        const bb = results.detections[0].boundingBox;
+                        // Spejl x-aksen fordi kameraet er spejlvendt
+                        const tx = 1 - bb.xCenter;
+                        const ty = bb.yCenter;
+                        const tw = bb.width;
+                        if (!tracked) {
+                            sx = tx; sy = ty; sw = tw;
+                            tracked = true;
+                        } else {
+                            sx += SMOOTH * (tx - sx);
+                            sy += SMOOTH * (ty - sy);
+                            sw += SMOOTH * (tw - sw);
+                        }
+                    } else {
+                        tracked = false;
+                    }
+                    draw();
+                });
+            } catch (e) {
+                // MediaPipe ikke tilgængeligt – brug fuld-skærm fallback
+                requestAnimationFrame(draw);
+            }
+        }
+
+        // --- Info-modal ---
         const infoBtn   = document.getElementById("info-btn");
         const infoModal = document.getElementById("info-modal");
         const infoClose = document.getElementById("info-close-btn");
@@ -266,14 +359,23 @@
         infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
         infoClose.addEventListener("click", () => infoModal.classList.remove("open"));
 
+        // --- Kamera ---
+        resizeCanvas();
+        window.addEventListener("resize", () => { resizeCanvas(); draw(); });
+        filterImg.addEventListener("load", draw);
+
         navigator.mediaDevices
             .getUserMedia({ video: { facingMode: "user" }, audio: false })
             .then(stream => {
                 video.srcObject = stream;
+                video.addEventListener("loadeddata", () => {
+                    resizeCanvas();
+                    initDetector();
+                    startDetectionLoop();
+                });
             })
             .catch(() => {
-                video.style.display   = "none";
-                overlay.style.display = "none";
+                canvas.style.display = "none";
                 document.querySelector(".ar-ui").style.display = "none";
                 errorDiv.style.display = "flex";
             });
