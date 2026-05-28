@@ -1,4 +1,15 @@
-body{
+:root {
+  /* Farver */
+--Salviegrøn: #656F57;
+--Sort: #000000; 
+--Hvid: #ffffff; 
+
+
+
+
+}
+
+.body{
      background: transparent;
      margin: 0;
 }
