@@ -1,23 +1,14 @@
-<<<<<<< HEAD
+
 :root {
   /* Farver */
 --Salviegrøn: #656F57;
 --Sort: #000000; 
 --Hvid: #ffffff; 
-
-
-
-
 }
 
-.body{
+body{
      background: transparent;
      margin: 0;
-=======
-body {
-  background: transparent;
-  margin: 0;
->>>>>>> 67e708f087e3977637349179672c1f3a9d3fc5c5
 }
 /* Ydre LED frame */
 .mirror-frame {
