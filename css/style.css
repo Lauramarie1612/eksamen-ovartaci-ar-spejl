@@ -1,6 +1,23 @@
-body{
+<<<<<<< HEAD
+:root {
+  /* Farver */
+--Salviegrøn: #656F57;
+--Sort: #000000; 
+--Hvid: #ffffff; 
+
+
+
+
+}
+
+.body{
      background: transparent;
      margin: 0;
+=======
+body {
+  background: transparent;
+  margin: 0;
+>>>>>>> 67e708f087e3977637349179672c1f3a9d3fc5c5
 }
 /* Ydre LED frame */
 .mirror-frame {
@@ -8,35 +25,38 @@ body{
   height: 750px;
   margin: 20px auto;
 
+  box-shadow:
+    0 0 10px #00fff2,
+    0 0 30px rgba(0, 255, 242, 0.5),
+    0 0 60px rgba(0, 255, 242, 0.2);
+
   padding: 12px;
   border-radius: 40px;
 
-    background: transparent; /* video overtager */
-    background-size: 300% 300%;
+  background: transparent; /* video overtager */
+  background-size: 300% 300%;
 
-    /* Black rounded frame */
-    border: 10px solid #000;
-    box-sizing: border-box;
-    background-clip: padding-box;
+  /* Black rounded frame */
+  border: 10px solid #000;
+  box-sizing: border-box;
+  background-clip: padding-box;
 
- 
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
 
 /* Background video that fills the mirror */
 .bg-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 .mirror-led {
@@ -47,8 +67,8 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .ja-btn {
@@ -75,7 +95,6 @@ body{
   margin-bottom: 20px;
 }
 
-
 /* container inde i spejlet - centrerer indhold vandret og lodret */
 .container {
   width: 100%;
@@ -93,6 +112,7 @@ body{
   border-radius: 30px;
   cursor: pointer;
   align-content: center;
+  font-size: larger;
 }
 
 .start-btn:hover {
@@ -101,14 +121,18 @@ body{
 }
 
 .language-selector {
-  border: none;
   gap: 20px;
-
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   margin-top: 30px;
+}
+
+.language-selector button {
+border-radius: 30px;
+padding: 10px;
+font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif 
 }
 
 /*Styling af identitetet knapper*/
@@ -122,7 +146,7 @@ body{
 
 .identitet-card {
   text-decoration: none;
-  color:black;
+  color: black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -143,7 +167,7 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .identitet-card img {
