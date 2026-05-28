@@ -29,5 +29,17 @@
     </div>
   </div>
 
+
+<script>
+  const baseTitle = "Ovartaci AR spejl";
+  const glyphs = ["✦", "✧", "✨", "⋆", "˚", "✺", "⚡", "·", "*", "꩜"];
+  let f = 0;
+  setInterval(() => {
+    const a = glyphs[f % glyphs.length];
+    const b = glyphs[(f + 4) % glyphs.length];
+    document.title = `${a}${b} ${baseTitle} ${b}${a}`;
+    f++;
+  }, 250);
+</script>
 </body>
 </html>
