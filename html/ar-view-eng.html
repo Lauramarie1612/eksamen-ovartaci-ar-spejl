@@ -245,7 +245,7 @@
 
         const params = new URLSearchParams(window.location.search);
         const id = parseInt(params.get("id"));
-        const identitet = identiteter.find(i => i.id === id) || identities[0];
+        const identitet = identities.find(i => i.id === id) || identities[0];
 
         const video    = document.getElementById("camera-video");
         const canvas   = document.getElementById("filter-overlay");
@@ -253,11 +253,11 @@
         const label    = document.getElementById("identity-label");
         const errorDiv = document.getElementById("camera-error");
 
-        label.textContent = identity.Name;
+        label.textContent = identitet.Name;
 
         // Forudindlæs filterbillede
         const filterImg = new Image();
-        filterImg.src = identity.Image;
+        filterImg.src = identitet.Image;
 
         // --- Canvas-tegning ---
         function resizeCanvas() {
@@ -356,7 +356,7 @@
 
         const item = document.createElement("div");
         item.className = "info-item";
-        item.innerHTML = `<h3>${identity.Name}</h3><p>${identity.Description}</p>`;
+        item.innerHTML = `<h3>${identitet.Name}</h3><p>${identitet.Description}</p>`;
         infoList.appendChild(item);
 
         infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
