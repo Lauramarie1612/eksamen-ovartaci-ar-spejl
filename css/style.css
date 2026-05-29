@@ -238,6 +238,16 @@ body {
   height: auto;
 }
 
+.identitet-card img[alt="Fuglen i paradis"],
+.identitet-card img[alt="Bird of Paradise"] {
+  width: 130%;
+}
+
+.identitet-card img[alt="Dragen"],
+.identitet-card img[alt="The Dragon"] {
+  width: 60%;
+}
+
 .identitet-card h2 {
   margin-top: 10px;
   font-size: 12px;
