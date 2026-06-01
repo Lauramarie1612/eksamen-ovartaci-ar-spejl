@@ -1,5 +1,9 @@
 "use strict";
 
+// Henter det gemte sprog fra Local Storage
+const sprog = localStorage.getItem("sprog");
+console.log("Valgt sprog:", sprog);
+
 //Her opretter vi et array med objekter
 //Hvert objekt repræsenterer en af Ovartacis identiteter
 
@@ -77,7 +81,6 @@ const grid = document.querySelector("#grid");
 
 //Vi gennemgår arrayet "identiter" én identitet ad gangen
 identiteter.forEach((identitet) => {
-  
   //Opretter et nye <a>-element
   //<a> bruges fordi hele kortet skal fungere som et klikbart link
   const card = document.createElement("a");
@@ -88,6 +91,11 @@ identiteter.forEach((identitet) => {
 
   //Gør kortet klikbart og sender brugeren videre til næste side, som er angivet i objektets "Link"
   card.href = identitet.Link;
+  
+  //Gemmer den valgte identitet i Local Storage
+  card.addEventListener("click", () => {
+    localStorage.setItem("valgtIdentitet", identitet.id);
+  });
 
   //Her indsætter vi HTML-indholdet inde i kortet
   //${} bruges til at hente data fra objektet

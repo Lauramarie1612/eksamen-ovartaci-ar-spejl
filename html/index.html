@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -21,14 +21,28 @@
         </button>
 
         <div class="language-selector">
-          <button onclick="window.location.href='index-eng.html';">🇬🇧 English</button>
-          <button>🇩🇰 Dansk</button>
+         <button onclick="chooseLanguage('en')">🇬🇧 English</button>
+         
+         <button onclick="chooseLanguage('da')">🇩🇰 Dansk</button>
           
         </div>
       </main>
     </div>
   </div>
 
+    <script>
+    function chooseLanguage(language) {
 
+      localStorage.setItem("sprog", language);
+
+      if (language === "en") {
+        window.location.href = "index-eng.html";
+      } else {
+        window.location.href = "index.html";
+      }
+
+    }
+    </script>
+    
 </body>
 </html>

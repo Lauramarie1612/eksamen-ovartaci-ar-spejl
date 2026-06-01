@@ -1,5 +1,9 @@
 "use strict";
 
+// Henter det gemte sprog fra Local Storage
+const sprog = localStorage.getItem("sprog");
+console.log("Selected language:", sprog);
+
 //Her opretter vi et array med objekter på engelsk
 //Hvert objekt repræsenterer en af Ovartacis identiteter
 
@@ -78,6 +82,11 @@ identities.forEach((identity) => {
 
   // Make the card clickable
   card.href = identity.Link;
+  
+  // Save the selected identity in Local Storage
+  card.addEventListener("click", () => {
+    localStorage.setItem("valgtIdentitet", identity.id);
+  });
 
   // Insert HTML content inside the card
   card.innerHTML = `
