@@ -103,11 +103,24 @@ body {
 }
 
 @keyframes spejl-glim {
-  0%   { background-position: -100% 0; opacity: 0; }
-  10%  { opacity: 1; }
-  40%  { background-position: 200% 0; opacity: 1; }
-  50%  { opacity: 0; }
-  100% { opacity: 0; background-position: 200% 0; }
+  0% {
+    background-position: -100% 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  40% {
+    background-position: 200% 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    background-position: 200% 0;
+  }
 }
 
 .ja-btn {
