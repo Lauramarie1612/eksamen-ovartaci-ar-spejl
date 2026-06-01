@@ -146,7 +146,7 @@ body {
 }
 
 .container h1 {
-  color: #ffffff;
+  color: var(--Hvid);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
@@ -209,7 +209,7 @@ body {
 
 .identitet-card {
   text-decoration: none;
-  color: black;
+  color: var(--Sort);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -224,7 +224,7 @@ body {
 .identitet-cirkel {
   width: 120px;
   height: 120px;
-  background: white;
+  background: var(--Hvid);
   border-radius: 50%;
   overflow: hidden;
   display: flex;
@@ -257,7 +257,7 @@ body {
 
 .valg-identitet h1 {
   font-size: 38px;
-  color: #000000;
+  color: var(--Sort);
   margin-bottom: 10px;
 }
 
