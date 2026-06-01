@@ -159,6 +159,11 @@ body {
   font-size: larger;
 }
 
+.start-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
 .tilbage-btn {
   position: absolute;
   top: 20px;
@@ -166,8 +171,27 @@ body {
   border-radius: 30px;
   padding: 5px;
 }
+.tilbage-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
 
-.start-btn:hover {
+.ja-btn:hover{
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.nej-btn:hover{
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.yes-btn:hover{
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.no-btn:hover{
   background: rgba(255, 255, 255, 0.25);
   transform: scale(1.05);
 }
@@ -196,6 +220,11 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+}
+
+.language-selector button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 /*Styling af identitetet knapper*/
