@@ -11,6 +11,10 @@ Projektet er udviklet i HTML, CSS og JavaScript.
 
 # Projekt struktur
 
+
+Indsæt billede 
+
+
 project/
 │
 ├── .vscode/
@@ -60,7 +64,7 @@ JavaScript-variabler og funktioner navngives med camelCase, mens CSS-klasser nav
 
 ## Navngivning af variabler og funktioner
 
-Der er anvendt beskrivende variabelnavne for at gøre koden mere læsbar og overskuelig.
+Der er anvendt korte variabelnavne for at gøre koden mere læsbar og overskuelig.
 
 Eksempler:
 
@@ -68,6 +72,7 @@ Eksempler:
 - identitet → repræsenterer ét objekt ad gangen
 - grid → HTML-container til identitetskort
 - card → dynamisk oprettet identitetskort
+Sprog
 
 CSS-klasser er navngivet på engelsk for at skabe en ensartet struktur mellem HTML, CSS og JavaScript.
 
