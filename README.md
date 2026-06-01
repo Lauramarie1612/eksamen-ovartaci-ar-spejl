@@ -118,19 +118,19 @@ Denne struktur gør det muligt dynamisk at generere indhold på siden samt hente
 
 ## Anvendelse af localStorage
 
-Projektet anvender browserens localStorage til at gemme brugerens valg og skabe et mere dynamisk flow.
+I projektet har vi anvendt Local Storage til at gemme brugerens valg direkte i browseren.
 
-Eksempler:
+Gemme valgt sprog:
 
-- valg af sprog
-- valgt identitet
-- brugerens navigation mellem sider
+Når brugeren vælger mellem dansk og engelsk på forsiden, gemmes sproget i Local Storage ved hjælp af:
+localStorage.setItem("sprog", language);
+På den måde husker browseren, hvilket sprog brugeren har valgt.
 
-Fordelen ved localStorage er, at data gemmes lokalt i browseren, så brugeroplevelsen kan tilpasses uden database eller backend.
+Hente gemt sprog:
 
-Eksempel:
-
-localStorage.setItem("sprog", "Dansk");
+På de efterfølgende sider hentes det gemte sprog igen med:
+const sprog = localStorage.getItem("sprog");
+Dette gør det muligt at se, hvilket sprog der tidligere er blevet valgt.
 
 ## Anvendte JavaScript-teknologier
 
