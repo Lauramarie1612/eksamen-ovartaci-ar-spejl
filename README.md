@@ -11,6 +11,8 @@ Projektet er udviklet i HTML, CSS og JavaScript.
 
 # Projekt struktur
 
+![Mappestruktur](images/struktur.png)
+
 - HTML-mappen indeholder projektets sider.
 - CSS-mappen indeholder styling og animationer.
 - JavaScript-mappen indeholder dynamisk funktionalitet.
@@ -20,9 +22,9 @@ Projektet er udviklet i HTML, CSS og JavaScript.
 
 Projektet anvender konsistente filnavne for at skabe struktur og overskuelighed.
 
-Danske og engelske versioner af siderne adskilles gennem suffixet "-eng".
+Danske og engelske versioner af siderne adskilles gennem "-eng".
 
-Eksempler:
+Eksempel på dansk og engelsk side:
 
 - dragen.html
 - dragen-eng.html
@@ -39,7 +41,7 @@ Eksempler:
 - identitet → repræsenterer ét objekt ad gangen
 - grid → HTML-container til identitetskort
 - card → dynamisk oprettet identitetskort
-  Sprog
+- Sprog
 
 CSS-klasser er navngivet på engelsk for at skabe en ensartet struktur mellem HTML, CSS og JavaScript.
 
@@ -52,22 +54,42 @@ Eksempler:
 
 ## Centrale valg i udviklingen
 
-!Skal vælge kodestykker! Redegør for koden!
-
 Et centralt valg i udviklingen var at skabe en futuristisk og interaktiv brugeroplevelse inspireret af et LED-/AR-spejl.
 
 Derfor blev følgende designvalg truffet:
 
-- mørkt interface
-- neon/LED glow-effekter
-- video-baggrund
-- glassmorphism-effekter
-- store klikbare elementer
-- minimalistisk navigation
+# neon/LED glow-effekter
+
+For at skabe den visuelle stemning af et LED-spejl, har vi stylet det i CSS med koden:
+
+.mirror-frame
+width: 600px;
+height: 750px;
+margin: 20px auto;
+
+box-shadow:
+0 0 100px #ffffff,
+0 0 150px rgba(255, 255, 255, 0.8),
+0 0 250px rgba(255, 255, 255, 0.6);
+
+# video-baggrund
+
+Vi har tilføjet en video som baggrund, da den skaber opmærksomhed, det har vi gjort ved at linke til den i index.html og index-eng.html. Sat en loop på, så den køre automatik hele tiden
+
+  <div class="mirror-frame">
+    <video class="bg-video" autoplay muted loop playsinline controls>
+      <source src="../images/video.mp4" type="video/mp4">
+
+# glassmorphism-effekter
+
+# store klikbare elementer
+
+# minimalistisk navigation
 
 Der blev desuden valgt at generere identitetskort dynamisk med JavaScript fremfor statisk HTML. Dette gør løsningen mere fleksibel og lettere at udvide.
 
 ## ORCA-tabel og datastruktur
+
 !Beskriv hvad man ser + billede af ORCA-tabel!
 
 Projektets indhold er organiseret ud fra en ORCA-struktur, hvor identiteterne er opbygget som objekter i et JavaScript-array.
@@ -118,7 +140,6 @@ Følgende JavaScript-teknologier er anvendt i projektet:
 Disse teknologier bruges til at skabe interaktivitet og dynamisk indhold.
 
 ## GitHubs samarbejde
-
 
 ## Konklusion
 
