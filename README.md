@@ -52,6 +52,8 @@ Eksempler:
 
 ## Centrale valg i udviklingen
 
+!Skal vælge kodestykker! Redegør for koden!
+
 Et centralt valg i udviklingen var at skabe en futuristisk og interaktiv brugeroplevelse inspireret af et LED-/AR-spejl.
 
 Derfor blev følgende designvalg truffet:
@@ -66,6 +68,7 @@ Derfor blev følgende designvalg truffet:
 Der blev desuden valgt at generere identitetskort dynamisk med JavaScript fremfor statisk HTML. Dette gør løsningen mere fleksibel og lettere at udvide.
 
 ## ORCA-tabel og datastruktur
+!Beskriv hvad man ser + billede af ORCA-tabel!
 
 Projektets indhold er organiseret ud fra en ORCA-struktur, hvor identiteterne er opbygget som objekter i et JavaScript-array.
 
@@ -109,10 +112,13 @@ Følgende JavaScript-teknologier er anvendt i projektet:
 - DOM manipulation
 - Event listeners
 - localStorage
-- emplate literals
+- Template literals
 - Dynamisk HTML-generering
 
 Disse teknologier bruges til at skabe interaktivitet og dynamisk indhold.
+
+## GitHubs samarbejde
+
 
 ## Konklusion
 
