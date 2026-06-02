@@ -11,39 +11,6 @@ Projektet er udviklet i HTML, CSS og JavaScript.
 
 # Projekt struktur
 
-
-Indsæt billede 
-
-
-project/
-│
-├── .vscode/
-│ └── settings.json
-│
-├── css/
-│ └── style.css
-│
-├── html/
-│ ├── index.html
-│ ├── index-eng.html
-│ ├── ovartaci.html
-│ ├── ovartaci-eng.html
-│ ├── kvinden.html
-│ ├── kvinden-eng.html
-│ ├── dragen.html
-│ ├── dragen-eng.html
-│ ├── fuglen.html
-│ ├── fuglen-eng.html
-│ ├── tiger.html
-│ └── tiger-eng.html
-│
-├── images/
-│
-├── js/
-│ └── ovartaci-ar-spejl.js
-│
-└── README.md
-
 - HTML-mappen indeholder projektets sider.
 - CSS-mappen indeholder styling og animationer.
 - JavaScript-mappen indeholder dynamisk funktionalitet.
@@ -72,7 +39,7 @@ Eksempler:
 - identitet → repræsenterer ét objekt ad gangen
 - grid → HTML-container til identitetskort
 - card → dynamisk oprettet identitetskort
-Sprog
+  Sprog
 
 CSS-klasser er navngivet på engelsk for at skabe en ensartet struktur mellem HTML, CSS og JavaScript.
 
