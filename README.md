@@ -29,8 +29,6 @@ Eksempel på dansk og engelsk side:
 - dragen.html
 - dragen-eng.html
 
-JavaScript-variabler og funktioner navngives med camelCase, mens CSS-klasser navngives med kebab-case.
-
 ## Navngivning af variabler og funktioner
 
 Der er anvendt korte variabelnavne for at gøre koden mere læsbar og overskuelig.
@@ -82,17 +80,68 @@ Vi har tilføjet en video som baggrund, da den skaber opmærksomhed, det har vi 
 
 # glassmorphism-effekter
 
+/_ Animeret glimtende lysstreg _/
+.mirror-led::after {
+content: "";
+position: absolute;
+inset: 0;
+border-radius: 28px;
+z-index: 2;
+pointer-events: none;
+overflow: hidden;
+
+background: linear-gradient(
+120deg,
+transparent 30%,
+rgba(255, 255, 255, 0.12) 48%,
+rgba(255, 255, 255, 0.22) 50%,
+rgba(255, 255, 255, 0.12) 52%,
+transparent 70%
+);
+background-size: 200% 100%;
+animation: spejl-glim 6s ease-in-out infinite;
+}
+
+@keyframes spejl-glim {
+0% {
+background-position: -100% 0;
+opacity: 0;
+}
+10% {
+opacity: 1;
+}
+40% {
+background-position: 200% 0;
+opacity: 1;
+}
+50% {
+opacity: 0;
+}
+100% {
+opacity: 0;
+background-position: 200% 0;
+}
+}
+
 # store klikbare elementer
+
+Eksempel:
+
+.ja-btn {
+padding: 10px 20px;
+border-radius: 30px;
+margin-bottom: 20px;
+}
 
 # minimalistisk navigation
 
-Der blev desuden valgt at generere identitetskort dynamisk med JavaScript fremfor statisk HTML. Dette gør løsningen mere fleksibel og lettere at udvide.
+Den skal være nemt for brugeren at bevæge sig rundt på skærmen, derfor er der ikke mange valg til brugeren
 
 ## ORCA-tabel og datastruktur
 
-!Beskriv hvad man ser + billede af ORCA-tabel!
-
 Projektets indhold er organiseret ud fra en ORCA-struktur, hvor identiteterne er opbygget som objekter i et JavaScript-array.
+
+![ORCA-table](images/orca.png)
 
 Eksempel på datastruktur:
 
@@ -107,6 +156,14 @@ Link: "ar-view.html?id=1"
 ]
 
 Denne struktur gør det muligt dynamisk at generere indhold på siden samt hente information ud fra brugerens valg.
+
+## Mapping mellem ORCA-tabellen og JavaScript-datastruktur
+
+ORCA-tabellen blev anvendt som grundlag for opbygningen af projektets JavaScript-datastruktur. Hvert objekt i ORCA-tabellen repræsenteres som et objekt i arrayet identiteter, hvor attributterne fra analysen er mappet til egenskaber i JavaScript.
+
+Attributterne id, navn, kunstner, årstal og beskrivelse blevet omsat til felterne id, Navn, Kunster, Årstal og Beskrivelse i datastrukturen. Derudover er felterne Billede og Link tilføjet for at understøtte den digitale oplevelse og navigation mellem siderne.
+
+Call-to-actions som Vælg en identitet er implementeret gennem klikbare identitetskort, det videresender brugeren til den relevante AR-side, hvor de kan prøve den valgte identitet
 
 ## Anvendelse af localStorage
 
@@ -123,6 +180,8 @@ Hente gemt sprog:
 På de efterfølgende sider hentes det gemte sprog igen med:
 const sprog = localStorage.getItem("sprog");
 Dette gør det muligt at se, hvilket sprog der tidligere er blevet valgt.
+
+![localstorage eksempel](images/localstorage.png)
 
 ## Anvendte JavaScript-teknologier
 
@@ -141,6 +200,20 @@ Disse teknologier bruges til at skabe interaktivitet og dynamisk indhold.
 
 ## GitHubs samarbejde
 
+Projektet blev udviklet i et fælles GitHub-repository, hvor alle gruppemedlemmer havde adgang til kodebasen. Vi arbejdede løbende med at opdatere projektet gennem commits, som blev anvendt til at dokumentere ændringer og fremskridt i udviklingen.
+
+For at sikre, at alle arbejdede på den nyeste version af projektet, anvendte vi GitHubs push- og pull-funktioner. Inden nye ændringer blev uploadet, blev den seneste version af repositoryet hentet via pull, hvorefter ændringerne blev pushet til GitHub.
+
+Vi arbejdede med meningsfulde og beskrivende commit-beskeder, som kort beskrev de ændringer, der var foretaget
+
+Projektet blev udviklet direkte i det fælles repository uden brug af separate branches eller pull requests. Samarbejdet blev i stedet koordineret gennem løbende kommunikation i gruppen da vi sad sammen fysisk, og ved regelmæssigt at synkronisere ændringer via GitHub.
+
+![Commits](images/commits.png)
+![Commits](images/commits2.png)
+
 ## Konklusion
 
 Projektet kombinerer HTML, CSS og JavaScript i en interaktiv prototype med fokus på brugeroplevelse, identitet og digital formidling. Der er arbejdet med både æstetik, funktionalitet og dynamisk indhold for at skabe en immersiv oplevelse inspireret af Ovartacis univers.
+
+![CSS validation](images/cssvalidation.png)
+![HTML validation](images/htmlvalidation.png)
