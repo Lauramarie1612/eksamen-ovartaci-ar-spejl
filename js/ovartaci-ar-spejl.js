@@ -95,10 +95,8 @@ identiteter.forEach((identitet) => {
   //Klassen bruges til styling i CSS
   card.classList.add("identitet-card");
 
-  //Gør kortet klikbart og sender brugeren videre til næste side, som er angivet i objektets "Link"
   card.href = identitet.Link;
 
-  //Gemmer den valgte identitet i Local Storage
   card.addEventListener("click", () => {
     localStorage.setItem("valgtIdentitet", identitet.id);
   });
