@@ -17,6 +17,7 @@ const identiteter = [
       "I midten af 1950'erne skriver og sender Ovartaci et brev til Kirkeministeriet og Justitsministeriet, hvor han hævder, at hans fødenavn er Louisa Pupparpasta, og at han fremover ønsker at blive tiltalt som 'Frøken' og bruge det opfundne navn Ovartaci Pupparpasta. Han ønsker også tilladelse til at gå i kvindetøj. Retslægerådet bliver involveret i sagen og udarbejder en erklæring, der hovedsageligt fokuserer på spørgsmålet om kvindebeklædning. Rådet argumenterer for, at Marcussen lider af skizofreni, og at det er en del af hans sygdom, at han forestiller sig selv som en kvinde og ønsker at klæde sig som en, hvorfor han bør nægtes muligheden for at gøre det.",
     Billede: "/images/louisa.png",
     Link: "ar-view.html?id=1",
+    Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",
   },
 
   {
@@ -28,6 +29,7 @@ const identiteter = [
       "Religiøse spørgsmål optager Ovartaci, og selvom der synes at være en ret stabil kerne i hans religiøse verdenssyn, er der også nogle mærkelige afvigelser. Ovartaci hælder mod buddhismen ('Jeg er buddhist og tilhænger af den buddhistiske lære – den buddhistiske overbevisning'), og han går rundt med en lille Buddhafigur i lommen.",
     Billede: "/images/buddha.png",
     Link: "ar-view.html?id=2",
+    Spørgsmål: "Hvilke labels har andre givet dig?",
   },
 
   {
@@ -39,6 +41,7 @@ const identiteter = [
       "Jeg begyndte som en paradisfugl, og under min flugt blev jeg til sidst forvandlet til en måge og ankom til Grønland, men det er mange år siden.",
     Billede: "/images/fuglen.png",
     Link: "ar-view.html?id=3",
+    Spørgsmål: "Hvem bestemmer, hvem vi er?",
   },
 
   {
@@ -50,6 +53,7 @@ const identiteter = [
       "Drager i Ovartacis kosmologi fungerede ikke som monstre, men som spirituelle symboler på lykke, værdighed, transformation og personlig frihed. Personlig frihed: En flugtvej og et sindbillede på at kunne bryde ud af psykiatriens fysiske og mentale rammer. Værdighed og styrke: Dragen stod for stolthed og livskvalitet. Transformation: En sjælelig forvandling, der ofte blev kædet sammen med genfødsel og kvindens psyke.",
     Billede: "/images/dragen.png",
     Link: "ar-view.html?id=4",
+    Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",
   },
 
   {
@@ -61,6 +65,7 @@ const identiteter = [
       "'Det er et menneske i tigerskikkelse eller en tiger, der rejser sig på bagbenene, men se, den har jo tæer som mennesket og ikke som en tiger. Det er et menneske i tigerskikkelse. Jeg var selv tiger og blev forvandlet til menneske'. Sådan fortæller Ovartaci i samtalebogen 'Ovartaci - Pictures, Thoughts and Visions of an Artist'. Netop denne flydende tilstand mellem dyr og mennesker er kendetegnende for Ovartaci.",
     Billede: "/images/tigeren.png",
     Link: "ar-view.html?id=5",
+    Spørgsmål: "Hvem bestemmer, hvem vi er?",
   },
 
   {
@@ -72,6 +77,7 @@ const identiteter = [
       "Ovartaci blev født som Louis Marcussen og voksede op i en fattig familie i Jylland. Som ung mand arbejdede han blandt andet som malersvend og rejste også i en periode til Argentina, hvor han arbejdede under hårde forhold. Rejserne og oplevelserne gjorde stort indtryk på ham og blev senere en del af hans fantasiverden i kunsten. I sine yngre år levede han udadtil som mand og blev beskrevet som intelligent, kreativ og meget fantasifuld. Senere i livet ændrede hans forhold til køn og identitet sig markant. Han ønskede i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten.",
     Billede: "/images/ovartaci.png",
     Link: "ar-view.html?id=6",
+    Spørgsmål: "Hvilke labels har andre givet dig?",
   },
 ];
 
@@ -91,7 +97,7 @@ identiteter.forEach((identitet) => {
 
   //Gør kortet klikbart og sender brugeren videre til næste side, som er angivet i objektets "Link"
   card.href = identitet.Link;
-  
+
   //Gemmer den valgte identitet i Local Storage
   card.addEventListener("click", () => {
     localStorage.setItem("valgtIdentitet", identitet.id);
