@@ -60,6 +60,7 @@ Derfor blev følgende designvalg truffet:
 
 For at skabe den visuelle stemning af et LED-spejl, har vi stylet det i CSS med koden:
 
+```css
 .mirror-frame
 width: 600px;
 height: 750px;
@@ -69,6 +70,7 @@ box-shadow:
 0 0 100px #ffffff,
 0 0 150px rgba(255, 255, 255, 0.8),
 0 0 250px rgba(255, 255, 255, 0.6);
+```
 
 # video-baggrund
 
@@ -84,6 +86,7 @@ Vi har tilføjet en video som baggrund, da den skaber opmærksomhed, det har vi 
 
 # glassmorphism-effekter
 
+```CSS
 /_ Animeret glimtende lysstreg _/
 .mirror-led::after {
 content: "";
@@ -126,16 +129,19 @@ opacity: 0;
 background-position: 200% 0;
 }
 }
+```
 
 # store klikbare elementer
 
 Eksempel:
 
+```css
 .ja-btn {
-padding: 10px 20px;
-border-radius: 30px;
-margin-bottom: 20px;
+  padding: 10px 20px;
+  border-radius: 30px;
+  margin-bottom: 20px;
 }
+```
 
 # minimalistisk navigation
 
@@ -149,6 +155,7 @@ Projektets indhold er organiseret ud fra en ORCA-struktur, hvor identiteterne er
 
 Eksempel på datastruktur:
 
+```JS
 const identiteter = [
 {
 id: 1,
@@ -158,6 +165,7 @@ Billede: "/images/louisa.png",
 Link: "ar-view.html?id=1"
 }
 ]
+```
 
 Denne struktur gør det muligt dynamisk at generere indhold på siden samt hente information ud fra brugerens valg.
 
@@ -221,3 +229,7 @@ Projektet kombinerer HTML, CSS og JavaScript i en interaktiv prototype med fokus
 
 ![CSS validation](images/cssvalidation.png)
 ![HTML validation](images/htmlvalidation.png)
+
+```
+
+```
