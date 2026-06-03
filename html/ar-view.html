@@ -98,7 +98,8 @@
 
         .info-btn {
             position: absolute;
-            top: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             right: 16px;
             z-index: 5;
             width: 34px;
@@ -375,8 +376,38 @@
 
         const spørgsmålModal = document.getElementById("spørgsmål-modal");
         const spørgsmålTekst = document.getElementById("modal-spørgsmål");
-        spørgsmålTekst.textContent = identitet.Spørgsmål;
-        spørgsmålModal.addEventListener("click", () => spørgsmålModal.classList.add("skjult"));
+
+        const alleSpørgsmål = [
+            "Hvordan har din identitet ændret sig gennem årene?",
+            "Hvilke labels har andre givet dig?",
+            "Hvem bestemmer, hvem vi er?",
+        ];
+        let spørgsmålIndex = 0;
+
+        function startSpørgsmålsCyklus() {
+            spørgsmålModal.classList.remove("skjult");
+
+            function visSpørgsmål() {
+                const tekst = alleSpørgsmål[spørgsmålIndex];
+                spørgsmålTekst.innerHTML = tekst.split("").map((char, i) =>
+                    `<span style="animation-delay:${i * 70}ms">${char === " " ? "&nbsp;" : char}</span>`
+                ).join("");
+                spørgsmålTekst.style.animation = "none";
+                spørgsmålTekst.offsetHeight;
+                spørgsmålTekst.style.animation = "";
+                spørgsmålModal.classList.remove("fade-ud");
+
+                setTimeout(() => {
+                    spørgsmålModal.classList.add("fade-ud");
+                    setTimeout(() => {
+                        spørgsmålIndex = (spørgsmålIndex + 1) % alleSpørgsmål.length;
+                        visSpørgsmål();
+                    }, 1000);
+                }, 8000);
+            }
+
+            visSpørgsmål();
+        }
 
         navigator.mediaDevices
             .getUserMedia({ video: { facingMode: "user" }, audio: false })
@@ -386,7 +417,7 @@
                     resizeCanvas();
                     initDetector();
                     startDetectionLoop();
-                    setTimeout(() => spørgsmålModal.classList.remove("skjult"), 4000);
+                    setTimeout(() => startSpørgsmålsCyklus(), 4000);
                 });
             })
             .catch(() => {

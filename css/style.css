@@ -312,9 +312,31 @@ body {
   display: none !important;
 }
 
-@keyframes fade-ind {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+@keyframes wave {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-7px); }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    letter-spacing: 0.4em;
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    letter-spacing: normal;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 14px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 0, 0, 0.3);
+  }
 }
 
 .spørgsmål-modal {
@@ -325,24 +347,33 @@ body {
   display: flex;
   justify-content: center;
   z-index: 10;
-  animation: fade-ind 0.8s ease forwards;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.spørgsmål-modal.fade-ud {
+  opacity: 0;
 }
 
 .spørgsmål-indhold {
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px);
-  border-radius: 14px;
-  padding: 12px 20px;
+  padding: 18px 30px;
   text-align: center;
   max-width: 80%;
 }
 
 .spørgsmål-indhold p {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
-  color: var(--Hvid);
+  color: var(--Sort);
   margin: 0;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  animation: reveal 3000ms ease-in-out forwards 200ms,
+             glow 2500ms linear infinite 2000ms;
+}
+
+.spørgsmål-indhold p span {
+  display: inline-block;
+  animation: wave 1.8s ease-in-out infinite;
 }
 
 .fortsæt-btn {
