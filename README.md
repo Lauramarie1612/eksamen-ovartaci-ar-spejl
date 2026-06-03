@@ -74,9 +74,13 @@ box-shadow:
 
 Vi har tilføjet en video som baggrund, da den skaber opmærksomhed, det har vi gjort ved at linke til den i index.html og index-eng.html. Sat en loop på, så den køre automatik hele tiden
 
-  <div class="mirror-frame">
-    <video class="bg-video" autoplay muted loop playsinline controls>
-      <source src="../images/video.mp4" type="video/mp4">
+```html
+<div class="mirror-frame">
+  <video class="bg-video" autoplay muted loop playsinline controls>
+    <source src="../images/video.mp4" type="video/mp4" />
+  </video>
+</div>
+```
 
 # glassmorphism-effekter
 
