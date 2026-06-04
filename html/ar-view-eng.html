@@ -199,6 +199,12 @@
             margin: 0;
             font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
         }
+
+        .info-årstal {
+            margin-top: 8px !important;
+            font-size: 13px !important;
+            color: #888 !important;
+        }
     </style>
 </head>
 <body>
@@ -235,12 +241,12 @@
         // yOffset: forskydning lodret i forhold til filterhøjden (0 = centreret, -0.2 = 20% op, 0.2 = 20% ned)
         // scale: overskriver global SCALE for denne identitet (højere tal = større filter)
         const identities = [
-            { id: 1, Name: "Louisa Pupparpasta", Image: "../images/louisa.png",   yOffset: 0,    scale: null, Description: "In the mid-1950s, Ovartaci wrote and sent a letter to the Ministry of Ecclesiastical Affairs and the Ministry of Justice, claiming that his birth name was Louisa Pupparpasta and that he wished to be addressed as “Miss” and use the invented name Ovartaci Pupparpasta from then on. He also requested permission to wear women’s clothing. The Medico-Legal Council argued that Marcussen suffered from schizophrenia, and that imagining himself as a woman was part of his illness.." },
-            { id: 2, Name: "The Buddhist",         Image: "../images/buddha.png",   yOffset: -0.2,    scale: 2.5, Description: "Religious questions fascinated Ovartaci, and although there seems to be a fairly stable core in his religious worldview, there are also some unusual deviations. Ovartaci leaned towards Buddhism (“I am a Buddhist and a follower of Buddhist teachings”), and he carried a small Buddha figure in his pocket." },
-            { id: 3, Name: "Bird of Paradise",   Image: "../images/fuglen.png",   yOffset: 0,    scale: 8.0, Description: "\"I began as a bird of paradise, and during my flight I was eventually transformed into a seagull and arrived in Greenland, but that was many years ago.\"" },
-            { id: 4, Name: "The Dragon",             Image: "../images/dragen.png",   yOffset: 0,    scale: null, Description: "In Ovartaci’s cosmology, dragons did not function as monsters, but as spiritual symbols of happiness, dignity, transformation, and personal freedom — an escape route and a mental image of breaking free from the physical and psychological boundaries of psychiatry." },
-            { id: 5, Name: "The Tiger",            Image: "../images/tigeren.png",  yOffset: 0,    scale: null, Description: "\“It is a human in the shape of a tiger, or a tiger standing on its hind legs, but look, it has toes like a human and not like a tiger. I myself was once a tiger and was transformed into a human.\” — Ovartaci. This fluid state between animal and human is characteristic of Ovartaci." },
-            { id: 6, Name: "Ovartaci",           Image: "../images/ovartaci.png", yOffset: -0.2,    scale: 2.5, Description: "Ovartaci was born as Louis Marcussen into a poor family in Jutland. He worked as a house painter and traveled to Argentina. Later in life, he wished for long periods to live as a woman and created many female figures and self-representations in his art." },
+            { id: 1, Name: “Louisa Pupparpasta”, Year: “1955”, Image: “../images/louisa.png”,   yOffset: 0,    scale: null, Description: “In the mid-1950s, Ovartaci wrote and sent a letter to the Ministry of Ecclesiastical Affairs and the Ministry of Justice, claiming that his birth name was Louisa Pupparpasta and that he wished to be addressed as “Miss” and use the invented name Ovartaci Pupparpasta from then on. He also requested permission to wear women’s clothing. The Medico-Legal Council argued that Marcussen suffered from schizophrenia, and that imagining himself as a woman was part of his illness..” },
+            { id: 2, Name: “The Buddhist”,         Year: “1954”, Image: “../images/buddha.png”,   yOffset: -0.2,    scale: 2.5, Description: “Religious questions fascinated Ovartaci, and although there seems to be a fairly stable core in his religious worldview, there are also some unusual deviations. Ovartaci leaned towards Buddhism (“I am a Buddhist and a follower of Buddhist teachings”), and he carried a small Buddha figure in his pocket.” },
+            { id: 3, Name: “Bird of Paradise”,   Year: “1935”, Image: “../images/fuglen.png”,   yOffset: 0,    scale: 8.0, Description: “\”I began as a bird of paradise, and during my flight I was eventually transformed into a seagull and arrived in Greenland, but that was many years ago.\”” },
+            { id: 4, Name: “The Dragon”,             Year: “1957”, Image: “../images/dragen.png”,   yOffset: 0,    scale: null, Description: “In Ovartaci’s cosmology, dragons did not function as monsters, but as spiritual symbols of happiness, dignity, transformation, and personal freedom — an escape route and a mental image of breaking free from the physical and psychological boundaries of psychiatry.” },
+            { id: 5, Name: “The Tiger”,            Year: “1966”, Image: “../images/tigeren.png”,  yOffset: 0,    scale: null, Description: “\”It is a human in the shape of a tiger, or a tiger standing on its hind legs, but look, it has toes like a human and not like a tiger. I myself was once a tiger and was transformed into a human.\” — Ovartaci. This fluid state between animal and human is characteristic of Ovartaci.” },
+            { id: 6, Name: “Ovartaci”,           Year: “1970”, Image: “../images/ovartaci.png”, yOffset: -0.2,    scale: 2.5, Description: “Ovartaci was born as Louis Marcussen into a poor family in Jutland. He worked as a house painter and traveled to Argentina. Later in life, he wished for long periods to live as a woman and created many female figures and self-representations in his art.” },
         ];
 
         const params = new URLSearchParams(window.location.search);
@@ -356,7 +362,7 @@
 
         const item = document.createElement("div");
         item.className = "info-item";
-        item.innerHTML = `<h3>${identitet.Name}</h3><p>${identitet.Description}</p>`;
+        item.innerHTML = `<h3>${identitet.Name}</h3><p>${identitet.Description}</p><p class="info-årstal">${identitet.Year}</p>`;
         infoList.appendChild(item);
 
         infoBtn.addEventListener("click", () => infoModal.classList.add("open"));

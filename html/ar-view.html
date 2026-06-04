@@ -200,6 +200,12 @@
             margin: 0;
             font-family: 'Futura', 'Century Gothic', 'Trebuchet MS', sans-serif;
         }
+
+        .info-årstal {
+            margin-top: 8px !important;
+            font-size: 13px !important;
+            color: #888 !important;
+        }
     </style>
 </head>
 <body>
@@ -242,12 +248,12 @@
         // yOffset: forskydning lodret i forhold til filterhøjden (0 = centreret, -0.2 = 20% op, 0.2 = 20% ned)
         // scale: overskriver global SCALE for denne identitet (højere tal = større filter)
         const identiteter = [
-            { id: 1, Navn: "Louisa Pupparpasta", Billede: "../images/louisa.png",   yOffset: 0,    scale: null, Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",  Beskrivelse: "I midten af 1950'erne skriver og sender Ovartaci et brev til Kirkeministeriet og Justitsministeriet, hvor han hævder, at hans fødenavn er Louisa Pupparpasta, og at han fremover ønsker at blive tiltalt som 'Frøken' og bruge det opfundne navn Ovartaci Pupparpasta. Han ønsker også tilladelse til at gå i kvindetøj. Retslægerådet argumenterer for, at Marcussen lider af skizofreni, og at det er en del af hans sygdom, at han forestiller sig selv som en kvinde." },
-            { id: 2, Navn: "Buddhisten",         Billede: "../images/buddha.png",   yOffset: -0.2, scale: 2.5, Spørgsmål: "Hvilke labels har andre givet dig?",                   Beskrivelse: "Religiøse spørgsmål optager Ovartaci, og selvom der synes at være en ret stabil kerne i hans religiøse verdenssyn, er der også nogle mærkelige afvigelser. Ovartaci hælder mod buddhismen ('Jeg er buddhist og tilhænger af den buddhistiske lære'), og han går rundt med en lille Buddhafigur i lommen." },
-            { id: 3, Navn: "Fuglen i paradis",   Billede: "../images/fuglen.png",   yOffset: 0,    scale: 8.0, Spørgsmål: "Hvem bestemmer, hvem vi er?",                          Beskrivelse: "\"Jeg begyndte som en paradisfugl, og under min flugt blev jeg til sidst forvandlet til en måge og ankom til Grønland, men det er mange år siden.\"" },
-            { id: 4, Navn: "Dragen",             Billede: "../images/dragen.png",   yOffset: 0,    scale: null, Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",  Beskrivelse: "Drager i Ovartacis kosmologi fungerede ikke som monstre, men som spirituelle symboler på lykke, værdighed, transformation og personlig frihed – en flugtvej og et sindbillede på at kunne bryde ud af psykiatriens fysiske og mentale rammer." },
-            { id: 5, Navn: "Tigeren",            Billede: "../images/tigeren.png",  yOffset: 0,    scale: null, Spørgsmål: "Hvem bestemmer, hvem vi er?",                          Beskrivelse: "\"Det er et menneske i tigerskikkelse eller en tiger, der rejser sig på bagbenene, men se, den har jo tæer som mennesket og ikke som en tiger. Jeg var selv tiger og blev forvandlet til menneske.\" – Ovartaci. Denne flydende tilstand mellem dyr og menneske er kendetegnende for Ovartaci." },
-            { id: 6, Navn: "Ovartaci",           Billede: "../images/ovartaci.png", yOffset: -0.2, scale: 2.5, Spørgsmål: "Hvilke labels har andre givet dig?",                   Beskrivelse: "Ovartaci blev født som Louis Marcussen i en fattig familie i Jylland. Han arbejdede som malersvend og rejste til Argentina. Senere i livet ønskede han i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten." },
+            { id: 1, Navn: "Louisa Pupparpasta", Årstal: "1955", Billede: "../images/louisa.png",   yOffset: 0,    scale: null, Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",  Beskrivelse: "I midten af 1950'erne skriver og sender Ovartaci et brev til Kirkeministeriet og Justitsministeriet, hvor han hævder, at hans fødenavn er Louisa Pupparpasta, og at han fremover ønsker at blive tiltalt som 'Frøken' og bruge det opfundne navn Ovartaci Pupparpasta. Han ønsker også tilladelse til at gå i kvindetøj. Retslægerådet argumenterer for, at Marcussen lider af skizofreni, og at det er en del af hans sygdom, at han forestiller sig selv som en kvinde." },
+            { id: 2, Navn: "Buddhisten",         Årstal: "1954", Billede: "../images/buddha.png",   yOffset: -0.2, scale: 2.5, Spørgsmål: "Hvilke labels har andre givet dig?",                   Beskrivelse: "Religiøse spørgsmål optager Ovartaci, og selvom der synes at være en ret stabil kerne i hans religiøse verdenssyn, er der også nogle mærkelige afvigelser. Ovartaci hælder mod buddhismen ('Jeg er buddhist og tilhænger af den buddhistiske lære'), og han går rundt med en lille Buddhafigur i lommen." },
+            { id: 3, Navn: "Fuglen i paradis",   Årstal: "1935", Billede: "../images/fuglen.png",   yOffset: 0,    scale: 8.0, Spørgsmål: "Hvem bestemmer, hvem vi er?",                          Beskrivelse: "\"Jeg begyndte som en paradisfugl, og under min flugt blev jeg til sidst forvandlet til en måge og ankom til Grønland, men det er mange år siden.\"" },
+            { id: 4, Navn: "Dragen",             Årstal: "1957", Billede: "../images/dragen.png",   yOffset: 0,    scale: null, Spørgsmål: "Hvordan har din identitet ændret sig gennem årene?",  Beskrivelse: "Drager i Ovartacis kosmologi fungerede ikke som monstre, men som spirituelle symboler på lykke, værdighed, transformation og personlig frihed – en flugtvej og et sindbillede på at kunne bryde ud af psykiatriens fysiske og mentale rammer." },
+            { id: 5, Navn: "Tigeren",            Årstal: "1966", Billede: "../images/tigeren.png",  yOffset: 0,    scale: null, Spørgsmål: "Hvem bestemmer, hvem vi er?",                          Beskrivelse: "\"Det er et menneske i tigerskikkelse eller en tiger, der rejser sig på bagbenene, men se, den har jo tæer som mennesket og ikke som en tiger. Jeg var selv tiger og blev forvandlet til menneske.\" – Ovartaci. Denne flydende tilstand mellem dyr og menneske er kendetegnende for Ovartaci." },
+            { id: 6, Navn: "Ovartaci",           Årstal: "1970", Billede: "../images/ovartaci.png", yOffset: -0.2, scale: 2.5, Spørgsmål: "Hvilke labels har andre givet dig?",                   Beskrivelse: "Ovartaci blev født som Louis Marcussen i en fattig familie i Jylland. Han arbejdede som malersvend og rejste til Argentina. Senere i livet ønskede han i lange perioder at leve som kvinde og skabte mange kvindelige figurer og selvfremstillinger i kunsten." },
         ];
 
         const params = new URLSearchParams(window.location.search);
@@ -363,7 +369,7 @@
 
         const item = document.createElement("div");
         item.className = "info-item";
-        item.innerHTML = `<h3>${identitet.Navn}</h3><p>${identitet.Beskrivelse}</p>`;
+        item.innerHTML = `<h3>${identitet.Navn}</h3><p>${identitet.Beskrivelse}</p><p class="info-årstal">${identitet.Årstal}</p>`;
         infoList.appendChild(item);
 
         infoBtn.addEventListener("click", () => infoModal.classList.add("open"));
