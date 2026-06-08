@@ -220,8 +220,8 @@ Vi arbejdede med meningsfulde og beskrivende commit-beskeder, som kort beskrev d
 
 Projektet blev udviklet direkte i det fælles repository uden brug af separate branches eller pull requests. Samarbejdet blev i stedet koordineret gennem løbende kommunikation i gruppen da vi sad sammen fysisk, og ved regelmæssigt at synkronisere ændringer via GitHub.
 
-![Commits](images/commits.png)
-![Commits](images/commits2.png)
+![CSS validation](images/commits.png)
+![HTML validation](images/commits2.png)
 
 ## Konklusion
 
